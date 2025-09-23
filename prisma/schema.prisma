@@ -6,3 +6,75 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Usuario {
+  id           Int         @id @default(autoincrement())
+  nomeCompleto String      @map("nome_completo")
+  email        String      @unique
+  telefone     String?
+  senhaHash    String      @map("senha_hash")
+  endereco     Endereco?   @relation(fields: [enderecoId], references: [id])
+  enderecoId   Int?
+  role         TipoUsuario @default(USUARIO)
+  adocoes      Adocao[]
+  criadoEm     DateTime    @default(now()) @map("criado_em")
+}
+
+model Endereco {
+  id          Int       @id @default(autoincrement())
+  cep         String
+  logradouro  String?
+  numero      String?
+  complemento String?
+  bairro      String?
+  cidade      String?
+  estado      String? 
+  pais        String    @default("Brasil")
+  usuarios    Usuario[]
+}
+
+model Pet {
+  id             Int        @id @default(autoincrement())
+  nome           String
+  especie        EspeciePet
+  sexo           SexoPet
+  dataNascimento DateTime?  @map("data_nascimento")
+  descricao      String?
+  status         StatusPet  @default(DISPONIVEL)
+  foto           String?
+  adocoes        Adocao[]
+  criadoEm       DateTime   @default(now()) @map("criado_em")
+}
+
+model Adocao {
+  id           Int      @id @default(autoincrement())
+  pet          Pet      @relation(fields: [petId], references: [id])
+  petId        Int
+  usuario      Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId    Int
+  dataAdocao   DateTime @map("data_adocao")
+  motivo       String
+  aceitouTermo Boolean  @default(false)
+  criadoEm     DateTime @default(now()) @map("criado_em")
+}
+
+enum TipoUsuario {
+  USUARIO
+  ADMIN
+}
+
+enum EspeciePet {
+  CAO
+  GATO
+}
+
+enum SexoPet {
+  MACHO
+  FEMEA
+}
+
+enum StatusPet {
+  DISPONIVEL
+  EM_ANALISE
+  ADOTADO
+}
