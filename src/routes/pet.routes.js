@@ -1,10 +1,8 @@
 import { Router } from "express";
+import { createPet } from "../controllers/PetController.js";
 
 const router = Router();
 
-// Rotas de exemplo
-router.get("/", (req, res) => {
-  res.send("Lista de pets");
-});
+router.post("/", createPet);
 
 export default router;
