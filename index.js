@@ -1,10 +1,13 @@
 import express from "express";
 import cors from "cors";
 import routes from "./src/routes/index.js";
+import { ensureUploadsDir } from "./src/utils/fileUtils.js";
+
+ensureUploadsDir();
 
 const app = express();
 
-app.use(cors());
+app.use(cors("*"));
 app.use(express.json());
 app.use("/api", routes);
 
