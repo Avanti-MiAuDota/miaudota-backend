@@ -235,7 +235,7 @@ collection:
         meta:
           id: req_e118c275ffaa4f348cd2b1468c2056af
           created: 1758743920666
-          modified: 1758809227489
+          modified: 1758838500181
           isPrivate: false
           description: ""
           sortKey: -1758740801428
@@ -280,6 +280,17 @@ collection:
               value: DISPONIVEL
               description: ""
               disabled: false
+        parameters:
+          - id: pair_2005b7e9be554c5499060dd33e2fdad1
+            name: ""
+            value: ""
+            description: ""
+            disabled: false
+          - id: pair_c7aaf2e927e74b78801a5a7d87e17d88
+            name: ""
+            value: ""
+            description: ""
+            disabled: false
         headers:
           - name: Content-Type
             value: multipart/form-data
@@ -518,12 +529,12 @@ collection:
       sortKey: -1708174869382.875
       description: ""
     children:
-      - url: http://localhost:8080/api/login/
+      - url: http://localhost:8080/api/auth/login/
         name: Fazer login
         meta:
           id: req_69681de4355543d3b9124be4568d31c2
           created: 1758743975411
-          modified: 1758809500282
+          modified: 1758853939608
           isPrivate: false
           description: ""
           sortKey: -1758740801428
