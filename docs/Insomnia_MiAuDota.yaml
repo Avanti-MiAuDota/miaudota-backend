@@ -1,0 +1,574 @@
+type: collection.insomnia.rest/5.0
+name: AVANTI-MIAUDOTA-BACKEND
+meta:
+  id: wrk_e6e885c267e44f37887adb5e6ca58fcc
+  created: 1758745840903
+  modified: 1758745840903
+  description: ""
+collection:
+  - name: Usuario
+    meta:
+      id: fld_9f716b78b129471db97a0d8bfb3a4f26
+      created: 1758740789822
+      modified: 1758740789822
+      sortKey: -1758740789822
+      description: ""
+    children:
+      - url: http://localhost:8080/api/usuarios
+        name: Buscar todos os usuarios
+        meta:
+          id: req_91f2932e107347a8b0b753a109b231c9
+          created: 1758653085373
+          modified: 1758740808880
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801328
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios/2
+        name: Buscar usuario por ID
+        meta:
+          id: req_0986a56b650245548defc65e497fafc4
+          created: 1758655783825
+          modified: 1758745901936
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801278
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios/
+        name: Criar usuario
+        meta:
+          id: req_f2aa624b752a47ca880cd28280a0a4a8
+          created: 1758655826536
+          modified: 1758743573791
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801428
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "nomeCompleto": "Teste Final",
+              "email": "teste@email.com",
+              "telefone": "278889-2525",
+              "senha": "123456789.",
+              "role": "USUARIO",
+              "endereco": {
+                "cep": "29000-7899",
+                "logradouro": "Rua Sao Paulo",
+                "numero": "999",
+            		"complemento": "Casa",
+                "bairro": "Laranjeiras",
+                "cidade": "Serra",
+                "estado": "ES",
+                "pais": "Brasil"
+              }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios/2
+        name: Atualizar usuario
+        meta:
+          id: req_17ff33834ddc4aa6bbc7383fd9198eb4
+          created: 1758726024741
+          modified: 1758745935381
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801128
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "endereco": {
+                "cep": "29123-0000",
+                "logradouro": "ALTERACAO ENDEREÇO",
+                "numero": "000010",
+                "bairro": "São francisco",
+                "cidade": "Cariacica2"
+              }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios/2
+        name: Deletar usuario
+        meta:
+          id: req_9a2916dbc3754a82b5105d5cb6839916
+          created: 1758726071985
+          modified: 1758745945672
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801028
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Pets
+    meta:
+      id: fld_6596b1d3e21f44709159d22fcba05bed
+      created: 1758743920647
+      modified: 1758743920647
+      sortKey: -1729845978142.5
+      description: ""
+    children:
+      - url: http://localhost:8080/api/pets/
+        name: Buscar todos os pets
+        meta:
+          id: req_4e45311febb443778567dbd229b9d82a
+          created: 1758743920652
+          modified: 1758809286355
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801328
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/pets/3
+        name: Buscar pets por ID
+        meta:
+          id: req_5280cc803b2f46059324718e27ae4501
+          created: 1758743920658
+          modified: 1758809294661
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801278
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/pets/
+        name: Criar pets
+        meta:
+          id: req_e118c275ffaa4f348cd2b1468c2056af
+          created: 1758743920666
+          modified: 1758838500181
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801428
+        method: POST
+        body:
+          mimeType: multipart/form-data
+          params:
+            - id: pair_5b5fffacd1604747bb74229f72169d0d
+              name: nome
+              value: Rex
+              description: ""
+              disabled: false
+            - id: pair_c88cbea131444fa09e39a24015b5c165
+              name: especie
+              value: CAO
+              description: ""
+              disabled: false
+            - id: pair_767fd81e7f0843fe8c27869addb56bbf
+              name: sexo
+              value: MACHO
+              description: ""
+              disabled: false
+            - id: pair_bf9e8c52cc654318a0b249bcbb2daedf
+              name: dataNascimento
+              value: 2022-01-01
+              description: ""
+              disabled: false
+            - id: pair_7696dc51c54f4d1e8a3693abf24d80be
+              name: descricao
+              value: Um cachorrinho muito brincalhão
+              description: ""
+              disabled: false
+            - id: pair_476cb203d9c24cd49aa53d04cc602742
+              name: foto
+              value: ""
+              description: ""
+              disabled: false
+              type: file
+              fileName: C:\Users\flavi\Downloads\favicon.png
+            - id: pair_cc13f67f2d6940b4af5a2688e5510e56
+              name: status
+              value: DISPONIVEL
+              description: ""
+              disabled: false
+        parameters:
+          - id: pair_2005b7e9be554c5499060dd33e2fdad1
+            name: ""
+            value: ""
+            description: ""
+            disabled: false
+          - id: pair_c7aaf2e927e74b78801a5a7d87e17d88
+            name: ""
+            value: ""
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/pets/3
+        name: Atualizar pets
+        meta:
+          id: req_8ff6cc1d3de54e2dbb2e71643e7e3b44
+          created: 1758743920674
+          modified: 1758809438553
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801128
+        method: PUT
+        body:
+          mimeType: multipart/form-data
+          params:
+            - id: pair_40b2ec00bc334e68987b7efb2c7662e2
+              name: ""
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_6b63593739674b9c8a7a572a2368613a
+              name: descricao
+              value: Um gatinho muito brincalhão
+              description: ""
+              disabled: false
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/pets/4
+        name: Deletar pets
+        meta:
+          id: req_9c1a516ecd174f1d90273003a01e9b64
+          created: 1758743920681
+          modified: 1758809876964
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801028
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Adoçoes
+    meta:
+      id: fld_4e2ba5faade2446398f1c83fa898cb1b
+      created: 1758743943825
+      modified: 1758743943825
+      sortKey: -1715398572302.75
+      description: ""
+    children:
+      - url: http://localhost:8080/api/adocoes
+        name: Buscar todas adoçoes
+        meta:
+          id: req_4c05d926bad74dda8629ac401cfced8d
+          created: 1758743943829
+          modified: 1758744379330
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801328
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/adocoes/2
+        name: Buscar adoção por ID
+        meta:
+          id: req_ac2edc34e6c344919feba7e75fea5829
+          created: 1758743943836
+          modified: 1758744391532
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801278
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/adocoes
+        name: Criar adoção
+        meta:
+          id: req_599bf665d1b042c288444ed369c1fb14
+          created: 1758743943844
+          modified: 1758809510361
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801428
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "nomeCompleto": "Administrador do Abrigo",
+              "email": "admin@admin.com",
+              "telefone": "278889-2525",
+              "senha": "admin123",
+              "role": "ADMIN",
+              "endereco": {
+                "cep": "29000-7899",
+                "logradouro": "Rua Sao Paulo",
+                "numero": "999",
+                "complemento": "Casa",
+                "bairro": "Laranjeiras",
+                "cidade": "Serra",
+                "estado": "ES",
+                "pais": "Brasil"
+              }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/adocoes/2
+        name: Atualizar adoção
+        meta:
+          id: req_2b4a6c4508594b87b753bdac8bfbedef
+          created: 1758743943851
+          modified: 1758808239062
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801128
+        method: PUT
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/adocoes/2
+        name: Deletar adoção
+        meta:
+          id: req_4efab435d2e54a13a4fd4a7dd8f93374
+          created: 1758743943857
+          modified: 1758744412024
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801028
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Login
+    meta:
+      id: fld_ebde1cb89ea34c838fa003a1ceaf5dd3
+      created: 1758743975390
+      modified: 1758743975390
+      sortKey: -1708174869382.875
+      description: ""
+    children:
+      - url: http://localhost:8080/api/auth/login/
+        name: Fazer login
+        meta:
+          id: req_69681de4355543d3b9124be4568d31c2
+          created: 1758743975411
+          modified: 1758853939608
+          isPrivate: false
+          description: ""
+          sortKey: -1758740801428
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "email": "admin@admin.com",
+              "senha": "admin123"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/2023.5.8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_4ebc1e22595449979e4c7358b385f3fc
+    created: 1758653015859
+    modified: 1758653015859
+environments:
+  name: Base Environment
+  meta:
+    id: env_acacb1373a814aa38ab44f47e7a2d605
+    created: 1758653015854
+    modified: 1758653015854
+    isPrivate: false
