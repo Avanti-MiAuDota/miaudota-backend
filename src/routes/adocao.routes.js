@@ -1,27 +1,29 @@
 import { Router } from "express";
 import AdocaoController from "../controllers/AdocaoController.js"; 
+import authMiddleware from "../middlewares/authMiddleware.js";
+import roleMiddleware from "../middlewares/roleMiddleware.js";
 // Importa o Controller (assumindo o caminho correto)
 
 const router = Router();
 
 // POST /adocoes -> Cria nova adoção
 // Chama o método createAdocao do Controller
-router.post("/adocoes", AdocaoController.createAdocao);
+router.post("/", authMiddleware, roleMiddleware("USUARIO"), AdocaoController.createAdocao);
 
 // GET /adocoes -> Lista todas as adoções
 // Chama o método getAdocoes do Controller
-router.get("/adocoes", AdocaoController.getAdocoes);
+router.get("/", AdocaoController.getAdocoes);
 
 // GET /adocoes/:id -> Busca adoção por ID
 // Chama o método getAdocaoById do Controller
-router.get("/adocoes/:id", AdocaoController.getAdocaoById);
+router.get("/:id", AdocaoController.getAdocaoById);
 
 // PUT /adocoes/:id -> Atualiza adoção
 // Chama o método updateAdocao do Controller
-router.put("/adocoes/:id", AdocaoController.updateAdocao);
+router.put("/:id", authMiddleware, AdocaoController.updateAdocao);
 
 // DELETE /adocoes/:id -> Remove adoção
 // Chama o método deleteAdocao do Controller
-router.delete("/adocoes/:id", AdocaoController.deleteAdocao);
+router.delete("/:id", authMiddleware, roleMiddleware("ADMIN"), AdocaoController.deleteAdocao);
 
 export default router;

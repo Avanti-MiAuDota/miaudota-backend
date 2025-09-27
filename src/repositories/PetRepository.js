@@ -16,6 +16,7 @@ export const PetRepository = {
   async findById(id) {
     return prisma.pet.findUnique({
       where: { id: parseInt(id) },
+      include: { adocoes: true },
     });
   },
 
