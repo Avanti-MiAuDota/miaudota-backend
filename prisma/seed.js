@@ -230,18 +230,11 @@ for (const pet of petsData) {
       await prisma.pet.create({
         data: petData,
       });
-      console.log(`- Pet '${petData.nome}' criado com sucesso!`);
+      console.log(`- Pet '${pet.nome}' criado com sucesso!`);
     } else {
-      console.log(`- Pet '${petsData.nome}' já existe no banco de dados.`);
+      console.log(`- Pet '${pet.nome}' já existe no banco de dados.`);
     }
   }
-
-  await prisma.pet.createMany({
-    data: petsData,
-    skipDuplicates: true,
-  });
-
-  console.log(`${petsData.length} pets criados com sucesso!`);
 }
 
 main()
