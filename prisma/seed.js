@@ -219,7 +219,7 @@ async function main() {
 ];
 
 for (const pet of petsData) {
-    const petExists = await prisma.pet.findUnique({
+    const petExists = await prisma.pet.findFirst({
       where: { nome: pet.nome, 
                especie: pet.especie,
                dataNascimento: pet.dataNascimento
