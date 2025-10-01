@@ -1,3 +1,4 @@
+import e from "cors";
 import prisma from "../src/config/database.js";
 import bcrypt from "bcrypt";
 
@@ -217,12 +218,23 @@ async function main() {
     },
 ];
 
-  await prisma.pet.createMany({
-    data: petsData,
-    skipDuplicates: true,
-  });
+for (const pet of petsData) {
+    const petExists = await prisma.pet.findFirst({
+      where: { nome: pet.nome, 
+               especie: pet.especie,
+               dataNascimento: pet.dataNascimento
+      },
+    });
 
-  console.log(`${petsData.length} pets criados com sucesso!`);
+    if (!petExists) {
+      await prisma.pet.create({
+        data: petData,
+      });
+      console.log(`- Pet '${pet.nome}' criado com sucesso!`);
+    } else {
+      console.log(`- Pet '${pet.nome}' já existe no banco de dados.`);
+    }
+  }
 }
 
 main()
