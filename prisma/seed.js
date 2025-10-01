@@ -1,3 +1,4 @@
+import e from "cors";
 import prisma from "../src/config/database.js";
 import bcrypt from "bcrypt";
 
@@ -216,6 +217,24 @@ async function main() {
       foto: "/prisma/pet_images_seed/jennie-gato.jpg",
     },
 ];
+
+for (const pet of petsData) {
+    const petExists = await prisma.pet.findUnique({
+      where: { nome: pet.nome, 
+               especie: pet.especie,
+               dataNascimento: pet.dataNascimento
+      },
+    });
+
+    if (!petExists) {
+      await prisma.pet.create({
+        data: petData,
+      });
+      console.log(`- Pet '${petData.nome}' criado com sucesso!`);
+    } else {
+      console.log(`- Pet '${petData.nome}' já existe no banco de dados.`);
+    }
+  }
 
   await prisma.pet.createMany({
     data: petsData,
