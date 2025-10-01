@@ -228,7 +228,7 @@ for (const pet of petsData) {
 
     if (!petExists) {
       await prisma.pet.create({
-        data: petData,
+        data: pet,
       });
       console.log(`- Pet '${pet.nome}' criado com sucesso!`);
     } else {

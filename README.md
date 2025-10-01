@@ -160,3 +160,7 @@ miaudota-backend/
 - [Multer](https://github.com/expressjs/multer) (upload de fotos de pets)
 - [Nodemon](https://nodemon.io/) (reload automático)
 - [dotenv](https://github.com/motdotla/dotenv) (variáveis de ambiente)
+
+## Modelagem do banco de dados
+
+
