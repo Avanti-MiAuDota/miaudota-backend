@@ -232,7 +232,7 @@ for (const pet of petsData) {
       });
       console.log(`- Pet '${petData.nome}' criado com sucesso!`);
     } else {
-      console.log(`- Pet '${petData.nome}' já existe no banco de dados.`);
+      console.log(`- Pet '${petsData.nome}' já existe no banco de dados.`);
     }
   }
 
