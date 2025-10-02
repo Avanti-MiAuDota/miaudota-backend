@@ -3,7 +3,7 @@ import { UsuarioModel } from "../models/Usuario.js";
 
 export const UsuarioController = {
 
-    async getAll(req, res) {
+    async getAll(_req, res) {
         try {
             const usuarios = await UsuarioService.getAllUsuarios();
             res.status(200).json(usuarios);

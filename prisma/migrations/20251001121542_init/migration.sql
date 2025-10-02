@@ -15,9 +15,7 @@ CREATE TABLE "public"."Usuario" (
     "id" SERIAL NOT NULL,
     "nome_completo" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "telefone" TEXT,
     "senha_hash" TEXT NOT NULL,
-    "enderecoId" INTEGER,
     "role" "public"."TipoUsuario" NOT NULL DEFAULT 'USUARIO',
     "criado_em" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -28,13 +26,14 @@ CREATE TABLE "public"."Usuario" (
 CREATE TABLE "public"."Endereco" (
     "id" SERIAL NOT NULL,
     "cep" TEXT NOT NULL,
-    "logradouro" TEXT,
-    "numero" TEXT,
+    "logradouro" TEXT NOT NULL,
+    "numero" TEXT NOT NULL,
     "complemento" TEXT,
-    "bairro" TEXT,
-    "cidade" TEXT,
-    "estado" TEXT,
+    "bairro" TEXT NOT NULL,
+    "cidade" TEXT NOT NULL,
+    "estado" TEXT NOT NULL,
     "pais" TEXT NOT NULL DEFAULT 'Brasil',
+    "telefone" TEXT NOT NULL,
 
     CONSTRAINT "Endereco_pkey" PRIMARY KEY ("id")
 );
@@ -46,7 +45,7 @@ CREATE TABLE "public"."Pet" (
     "especie" "public"."EspeciePet" NOT NULL,
     "sexo" "public"."SexoPet" NOT NULL,
     "data_nascimento" TIMESTAMP(3),
-    "descricao" TEXT,
+    "descricao" TEXT NOT NULL,
     "status" "public"."StatusPet" NOT NULL DEFAULT 'DISPONIVEL',
     "foto" TEXT,
     "criado_em" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -63,6 +62,7 @@ CREATE TABLE "public"."Adocao" (
     "motivo" TEXT NOT NULL,
     "aceitouTermo" BOOLEAN NOT NULL DEFAULT false,
     "criado_em" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "enderecoId" INTEGER NOT NULL,
 
     CONSTRAINT "Adocao_pkey" PRIMARY KEY ("id")
 );
@@ -70,11 +70,14 @@ CREATE TABLE "public"."Adocao" (
 -- CreateIndex
 CREATE UNIQUE INDEX "Usuario_email_key" ON "public"."Usuario"("email");
 
--- AddForeignKey
-ALTER TABLE "public"."Usuario" ADD CONSTRAINT "Usuario_enderecoId_fkey" FOREIGN KEY ("enderecoId") REFERENCES "public"."Endereco"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "Adocao_enderecoId_key" ON "public"."Adocao"("enderecoId");
 
 -- AddForeignKey
 ALTER TABLE "public"."Adocao" ADD CONSTRAINT "Adocao_petId_fkey" FOREIGN KEY ("petId") REFERENCES "public"."Pet"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."Adocao" ADD CONSTRAINT "Adocao_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "public"."Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."Adocao" ADD CONSTRAINT "Adocao_enderecoId_fkey" FOREIGN KEY ("enderecoId") REFERENCES "public"."Endereco"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

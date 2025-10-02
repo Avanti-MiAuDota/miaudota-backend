@@ -160,3 +160,16 @@ miaudota-backend/
 - [Multer](https://github.com/expressjs/multer) (upload de fotos de pets)
 - [Nodemon](https://nodemon.io/) (reload automático)
 - [dotenv](https://github.com/motdotla/dotenv) (variáveis de ambiente)
+
+## Modelagem do Banco de Dados
+
+<img width="987" height="634" alt="Captura de tela 2025-10-01 091011" src="https://github.com/user-attachments/assets/12c63dfd-7726-4724-813a-537efe022ce7" />
+
+## Equipe de Desenvolvimento
+
+- [André](https://github.com/Mordev-tech)
+- [Daniel](https://github.com/danielcooder)
+- [Danielle](https://github.com/daniellesena)
+- [Flávia](https://github.com/flaviare1s)
+- [Juliano](https://github.com/julianohbl)
+- [Vittoria](https://github.com/Vittoriaalopes)

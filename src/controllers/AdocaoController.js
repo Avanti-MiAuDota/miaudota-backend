@@ -4,7 +4,7 @@ class AdocaoController {
   // POST /adocoes
   async createAdocao(req, res) {
     try {
-      const { petId, usuarioId, motivo, aceitouTermo } = req.body;
+      const { petId, usuarioId, motivo, aceitouTermo, endereco } = req.body;
 
       if (!petId || !usuarioId || !motivo) {
         return res.status(400).json({ error: "Campos obrigatórios faltando" });
@@ -18,6 +18,7 @@ class AdocaoController {
         motivo,
         aceitouTermo: aceitouTermo ?? false,
         dataAdocao,
+        endereco,
       });
 
       return res.status(201).json(adocao);

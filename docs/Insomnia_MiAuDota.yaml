@@ -71,7 +71,7 @@ collection:
         meta:
           id: req_f2aa624b752a47ca880cd28280a0a4a8
           created: 1758655826536
-          modified: 1758743573791
+          modified: 1759318588647
           isPrivate: false
           description: ""
           sortKey: -1758740801428
@@ -80,21 +80,10 @@ collection:
           mimeType: application/json
           text: |
             {
-              "nomeCompleto": "Teste Final",
+              "nomeCompleto": "teste",
               "email": "teste@email.com",
-              "telefone": "278889-2525",
               "senha": "123456789.",
-              "role": "USUARIO",
-              "endereco": {
-                "cep": "29000-7899",
-                "logradouro": "Rua Sao Paulo",
-                "numero": "999",
-            		"complemento": "Casa",
-                "bairro": "Laranjeiras",
-                "cidade": "Serra",
-                "estado": "ES",
-                "pais": "Brasil"
-              }
+              "role": "USUARIO"
             }
         headers:
           - name: Content-Type
@@ -204,12 +193,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8080/api/pets/3
+      - url: http://localhost:8080/api/pets/12
         name: Buscar pets por ID
         meta:
           id: req_5280cc803b2f46059324718e27ae4501
           created: 1758743920658
-          modified: 1758809294661
+          modified: 1759271659186
           isPrivate: false
           description: ""
           sortKey: -1758740801278
@@ -235,7 +224,7 @@ collection:
         meta:
           id: req_e118c275ffaa4f348cd2b1468c2056af
           created: 1758743920666
-          modified: 1758838500181
+          modified: 1759319935045
           isPrivate: false
           description: ""
           sortKey: -1758740801428
@@ -294,8 +283,19 @@ collection:
         headers:
           - name: Content-Type
             value: multipart/form-data
+            id: pair_674389021993497b89ea221eb05ef653
           - name: User-Agent
             value: insomnia/2023.5.8
+            id: pair_67489134c5ba4d4e826d700ca7c46d0d
+          - id: pair_ac8fad18eeba4d37bcac5f8536265eed
+            name: ""
+            value: ""
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzU5MzE5OTAxLCJleHAiOjE3NTk0MDYzMDF9.aPkHhxUN4Pu6AmhcQE2wwiur3MgPp1hmUtNxjBradeA
+          disabled: false
         settings:
           renderRequestBody: true
           encodeUrl: true
@@ -340,12 +340,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8080/api/pets/4
+      - url: http://localhost:8080/api/pets/22
         name: Deletar pets
         meta:
           id: req_9c1a516ecd174f1d90273003a01e9b64
           created: 1758743920681
-          modified: 1758809876964
+          modified: 1759319970548
           isPrivate: false
           description: ""
           sortKey: -1758740801028
@@ -358,6 +358,9 @@ collection:
             value: application/json
           - name: User-Agent
             value: insomnia/2023.5.8
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzU5MzE5OTAxLCJleHAiOjE3NTk0MDYzMDF9.aPkHhxUN4Pu6AmhcQE2wwiur3MgPp1hmUtNxjBradeA
         settings:
           renderRequestBody: true
           encodeUrl: true
@@ -400,12 +403,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8080/api/adocoes/2
+      - url: http://localhost:8080/api/adocoes/1
         name: Buscar adoção por ID
         meta:
           id: req_ac2edc34e6c344919feba7e75fea5829
           created: 1758743943836
-          modified: 1758744391532
+          modified: 1759319844478
           isPrivate: false
           description: ""
           sortKey: -1758740801278
@@ -431,7 +434,7 @@ collection:
         meta:
           id: req_599bf665d1b042c288444ed369c1fb14
           created: 1758743943844
-          modified: 1758809510361
+          modified: 1759319532396
           isPrivate: false
           description: ""
           sortKey: -1758740801428
@@ -440,20 +443,20 @@ collection:
           mimeType: application/json
           text: |
             {
-              "nomeCompleto": "Administrador do Abrigo",
-              "email": "admin@admin.com",
-              "telefone": "278889-2525",
-              "senha": "admin123",
-              "role": "ADMIN",
+              "petId": 15,
+              "usuarioId": 2,
+              "dataAdocao": "2025-09-27T00:00:00.000Z",
+              "motivo": "Quero adotar para companhia porque me sinto sozinha",
+              "aceitouTermo": true,
               "endereco": {
-                "cep": "29000-7899",
-                "logradouro": "Rua Sao Paulo",
-                "numero": "999",
-                "complemento": "Casa",
-                "bairro": "Laranjeiras",
-                "cidade": "Serra",
-                "estado": "ES",
-                "pais": "Brasil"
+                "cep": "60000000",
+                "logradouro": "Rua Exemplo",
+                "numero": "123",
+                "complemento": "Apto 101",
+                "bairro": "Centro",
+                "cidade": "Fortaleza",
+                "estado": "CE",
+                "telefone": "278889-2525"
               }
             }
         headers:
@@ -461,6 +464,9 @@ collection:
             value: application/json
           - name: User-Agent
             value: insomnia/2023.5.8
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6IlVTVUFSSU8iLCJpYXQiOjE3NTkyNzE0NTMsImV4cCI6MTc1OTM1Nzg1M30.tPNmxlvXkxRn0t_yXLp7NAkWU-KxO1arrUcLZsH1Cb8
         settings:
           renderRequestBody: true
           encodeUrl: true
@@ -469,24 +475,40 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8080/api/adocoes/2
+      - url: http://localhost:8080/api/adocoes/1
         name: Atualizar adoção
         meta:
           id: req_2b4a6c4508594b87b753bdac8bfbedef
           created: 1758743943851
-          modified: 1758808239062
+          modified: 1759319778693
           isPrivate: false
           description: ""
           sortKey: -1758740801128
         method: PUT
         body:
           mimeType: application/json
-          text: ""
+          text: |
+            {
+              "motivo": "Quero adotar para companhia porque me sinto sozinha",
+              "endereco": {
+                "cep": "60000000",
+                "logradouro": "Rua Exemplo",
+                "numero": "123",
+                "complemento": "Apto 101",
+                "bairro": "Centro",
+                "cidade": "Sobral",
+                "estado": "CE",
+                "telefone": "278889-2525"
+              }
+            }
         headers:
           - name: Content-Type
             value: application/json
           - name: User-Agent
             value: insomnia/2023.5.8
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6IlVTVUFSSU8iLCJpYXQiOjE3NTkzMTY5MzksImV4cCI6MTc1OTQwMzMzOX0.FYaKp7HhqiswpNUrrBOBb7D2QXXTpSFNoJO8irjcZ_s
         settings:
           renderRequestBody: true
           encodeUrl: true
@@ -495,12 +517,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8080/api/adocoes/2
+      - url: http://localhost:8080/api/adocoes/1
         name: Deletar adoção
         meta:
           id: req_4efab435d2e54a13a4fd4a7dd8f93374
           created: 1758743943857
-          modified: 1758744412024
+          modified: 1759319918339
           isPrivate: false
           description: ""
           sortKey: -1758740801028
@@ -513,6 +535,9 @@ collection:
             value: application/json
           - name: User-Agent
             value: insomnia/2023.5.8
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzU5MzE5OTAxLCJleHAiOjE3NTk0MDYzMDF9.aPkHhxUN4Pu6AmhcQE2wwiur3MgPp1hmUtNxjBradeA
         settings:
           renderRequestBody: true
           encodeUrl: true
@@ -534,7 +559,7 @@ collection:
         meta:
           id: req_69681de4355543d3b9124be4568d31c2
           created: 1758743975411
-          modified: 1758853939608
+          modified: 1759319900358
           isPrivate: false
           description: ""
           sortKey: -1758740801428
@@ -551,6 +576,9 @@ collection:
             value: application/json
           - name: User-Agent
             value: insomnia/2023.5.8
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6IlVTVUFSSU8iLCJpYXQiOjE3NTkzMTY5MzksImV4cCI6MTc1OTQwMzMzOX0.FYaKp7HhqiswpNUrrBOBb7D2QXXTpSFNoJO8irjcZ_s
         settings:
           renderRequestBody: true
           encodeUrl: true
