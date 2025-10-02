@@ -1,17 +1,16 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client-js" 
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = env("DATABASE_URL")
 }
 
 model Usuario {
   id           Int         @id @default(autoincrement())
   nomeCompleto String      @map("nome_completo")
   email        String      @unique
-  telefone     String?
   senhaHash    String      @map("senha_hash")
   role         TipoUsuario @default(USUARIO)
   adocoes      Adocao[]
@@ -21,13 +20,14 @@ model Usuario {
 model Endereco {
   id          Int       @id @default(autoincrement())
   cep         String
-  logradouro  String?
-  numero      String?
+  logradouro  String
+  numero      String
   complemento String?
-  bairro      String?
-  cidade      String?
-  estado      String? 
+  bairro      String
+  cidade      String
+  estado      String
   pais        String    @default("Brasil")
+  telefone    String
   adocao      Adocao?
 }
 
@@ -37,7 +37,7 @@ model Pet {
   especie        EspeciePet
   sexo           SexoPet
   dataNascimento DateTime?  @map("data_nascimento")
-  descricao      String?
+  descricao      String
   status         StatusPet  @default(DISPONIVEL)
   foto           String?
   adocoes        Adocao[]
@@ -54,13 +54,13 @@ model Adocao {
   motivo       String
   aceitouTermo Boolean  @default(false)
   criadoEm     DateTime @default(now()) @map("criado_em")
-  endereco     Endereco?   @relation(fields: [enderecoId], references: [id])
-  enderecoId   Int?       @unique
+  endereco     Endereco   @relation(fields: [enderecoId], references: [id])
+  enderecoId   Int       @unique
 }
 
-enum TipoUsuario {
+enum TipoUsuario { 
   USUARIO
-  ADMIN
+  ADMIN 
 }
 
 enum EspeciePet {
@@ -73,7 +73,7 @@ enum SexoPet {
   FEMEA
 }
 
-enum StatusPet {
+enum StatusPet { 
   DISPONIVEL
   EM_ANALISE
   ADOTADO

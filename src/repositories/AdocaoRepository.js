@@ -7,15 +7,33 @@ class AdocaoRepository {
   async create(data) {
     return await prisma.adocao.create({
       data: {
-        petId: data.petId,
-        usuarioId: data.usuarioId,
+        pet: {
+          connect: { id: data.petId },
+        },
+        usuario: {
+          connect: { id: data.usuarioId },
+        },
         dataAdocao: data.dataAdocao,
         motivo: data.motivo,
         aceitouTermo: data.aceitouTermo ?? false,
+        endereco: {
+          create: {
+            cep: data.endereco.cep,
+            logradouro: data.endereco.logradouro,
+            numero: data.endereco.numero,
+            complemento: data.endereco.complemento,
+            bairro: data.endereco.bairro,
+            cidade: data.endereco.cidade,
+            estado: data.endereco.estado,
+            telefone: data.endereco.telefone,
+            pais: data.endereco.pais ?? "Brasil",
+          },
+        },
       },
       include: {
         pet: true,
         usuario: true,
+        endereco: true,
       },
     });
   }
@@ -26,6 +44,7 @@ class AdocaoRepository {
       include: {
         pet: true,
         usuario: true,
+        endereco: true,
       },
       orderBy: {
         dataAdocao: "desc",
@@ -40,6 +59,7 @@ class AdocaoRepository {
       include: {
         pet: true,
         usuario: true,
+        endereco: true,
       },
     });
   }
@@ -50,19 +70,30 @@ class AdocaoRepository {
       return await prisma.adocao.update({
         where: { id: Number(id) },
         data: {
-          petId: data.petId,
-          usuarioId: data.usuarioId,
-          dataAdocao: data.dataAdocao ? new Date(data.dataAdocao) : undefined,
-          motivo: data.motivo,
-          aceitouTermo: data.aceitouTermo,
+          motivo: data.motivo, // atualiza o motivo
+          endereco: data.endereco
+            ? {
+                create: {
+                  cep: data.endereco.cep,
+                  logradouro: data.endereco.logradouro,
+                  numero: data.endereco.numero,
+                  complemento: data.endereco.complemento,
+                  bairro: data.endereco.bairro,
+                  cidade: data.endereco.cidade,
+                  estado: data.endereco.estado,
+                  telefone: data.endereco.telefone,
+                  pais: data.endereco.pais ?? "Brasil",
+                },
+              }
+            : undefined,
         },
         include: {
           pet: true,
           usuario: true,
+          endereco: true,
         },
       });
     } catch (error) {
-      // Se não encontrar o registro, retorna null
       if (error.code === "P2025") return null;
       throw error;
     }
