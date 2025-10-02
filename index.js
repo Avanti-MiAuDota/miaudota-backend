@@ -13,6 +13,10 @@ app.use(
   })
 );
 app.use(express.json());
+
+app.use("/uploads", express.static("uploads"));
+app.use("/images", express.static("prisma/pet_images_seed"));
+
 app.use("/api", routes);
 
 const PORT = process.env.PORT || 8080;
