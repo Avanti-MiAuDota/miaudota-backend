@@ -1,5 +1,7 @@
+
 import { UsuarioService } from "../services/UsuarioService.js";
 import { UsuarioModel } from "../models/Usuario.js";
+import { usuarioValidation } from "../validations/usuarioValidation.js";
 
 export const UsuarioController = {
 
@@ -23,9 +25,14 @@ export const UsuarioController = {
         }
     },
 
+
     async create(req, res) {
         try {
-            const usuarioModel = new UsuarioModel(req.body);
+            const { error, value } = usuarioValidation.validate(req.body, { abortEarly: false });
+            if (error) {
+                return res.status(400).json({ errors: error.details.map(e => e.message) });
+            }
+            const usuarioModel = new UsuarioModel(value);
             const novoUsuario = await UsuarioService.createUsuario(usuarioModel);
             res.status(201).json(novoUsuario);
         } catch (error) {
@@ -33,9 +40,14 @@ export const UsuarioController = {
         }
     },
 
+
     async update(req, res) {
         try {
-            const usuarioModel = new UsuarioModel(req.body);
+            const { error, value } = usuarioValidation.validate(req.body, { abortEarly: false });
+            if (error) {
+                return res.status(400).json({ errors: error.details.map(e => e.message) });
+            }
+            const usuarioModel = new UsuarioModel(value);
             const usuarioAtualizado = await UsuarioService.updateUsuario(req.params.id, usuarioModel);
             res.status(200).json(usuarioAtualizado);
         } catch (error) {

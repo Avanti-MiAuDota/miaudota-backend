@@ -21,23 +21,16 @@ class AdocaoService {
             throw new Error('Pet não encontrado.');
         }
 
-        // 3. Verificar se o pet está com status DISPONIVEL (Regra de Negócio)
-        if (pet.status !== 'DISPONIVEL') {
+        // 3. Verificar se o pet está ADOTADO. (Regra de Negócio)
+        if (pet.status === 'ADOTADO') {
             throw new Error(`Pet não está disponível para adoção. Status atual: ${pet.status}.`);
         }
-
-        // 4. Garantir que não exista outra adoção ativa para o mesmo pet (Regra de Negócio)
-        // Heurística adaptada: Se o Pet tem o status EM_ANALISE ou ADOTADO,
-        // consideramos que o processo já está em andamento/finalizado.
-        if (pet.status === 'EM_ANALISE' || pet.status === 'ADOTADO') {
-            throw new Error('Já existe um processo de adoção ativo ou finalizado para este pet.');
-        }
-
-        // 5. Alterar status do pet para EM_ANALISE (Regra de Negócio)
+        
+        // 4. Alterar status do pet para EM_ANALISE (Regra de Negócio)
         // Isso "trava" o pet, indicando que uma solicitação de adoção foi registrada.
         await PetRepository.updateStatus(petId, 'EM_ANALISE');
 
-        // 6. Cria a adoção (Usando o Repositório)
+        // 5. Cria a adoção (Usando o Repositório)
         // O AdocaoRepository só salva os campos presentes no schema (petId, usuarioId, dataAdocao, etc.)
         const novaAdocao = await AdocaoRepository.create(dadosAdocao);
 
