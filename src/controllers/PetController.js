@@ -1,40 +1,19 @@
+
 import { PetService } from "../services/PetService.js";
+import { petValidation, petUpdateValidation } from "../validations/petValidation.js";
 
 export const PetController = {
   async createPet(req, res) {
     try {
-      const {
-        nome,
-        especie,
-        sexo,
-        dataNascimento,
-        descricao,
-        status,
-      } = req.body;
-
-      const fotoPath = req.file ? req.file.path : null;
-
-      const dataNascimentoDate =
-        dataNascimento && !isNaN(Date.parse(dataNascimento))
-          ? new Date(dataNascimento)
-          : null;
-
-      if (!nome || !especie || !sexo) {
-        return res.status(400).json({
-          message: "Nome, espécie e sexo são obrigatórios.",
-        });
+      const { error, value } = petValidation.validate(req.body, { abortEarly: false });
+      if (error) {
+        return res.status(400).json({ errors: error.details.map(e => e.message) });
       }
-
+      const fotoPath = req.file ? req.file.path : null;
       const newPet = await PetService.createPet({
-        nome,
-        especie,
-        sexo,
-        dataNascimento: dataNascimentoDate,
-        descricao: descricao || null,
-        status: status || "DISPONIVEL",
+        ...value,
         foto: fotoPath,
       });
-
       return res.status(201).json(newPet);
     } catch (error) {
       console.error(error);
@@ -71,29 +50,13 @@ export const PetController = {
   async updatePet(req, res) {
     try {
       const { id } = req.params;
-      const {
-        nome,
-        especie,
-        sexo,
-        dataNascimento,
-        descricao,
-        status,
-      } = req.body;
-
+      const { error, value } = petUpdateValidation.validate(req.body, { abortEarly: false });
+      if (error) {
+        return res.status(400).json({ errors: error.details.map(e => e.message) });
+      }
       const fotoPath = req.file ? req.file.path : undefined;
-
-      const updateData = {
-        ...(nome && { nome }),
-        ...(especie && { especie }),
-        ...(sexo && { sexo }),
-        ...(dataNascimento !== undefined && {
-          dataNascimento: dataNascimento ? new Date(dataNascimento) : null,
-        }),
-        ...(descricao !== undefined && { descricao }),
-        ...(status && { status }),
-        ...(fotoPath && { foto: fotoPath }),
-      };
-
+      const updateData = { ...value };
+      if (fotoPath) updateData.foto = fotoPath;
       const updatedPet = await PetService.updatePet(id, updateData);
       return res.json(updatedPet);
     } catch (error) {
