@@ -1,26 +1,19 @@
 import AdocaoService from "../services/AdocaoService.js";
+import { adocaoValidation, adocaoUpdateValidation } from "../validations/adocaoValidation.js";
+
 
 class AdocaoController {
   // POST /adocoes
   async createAdocao(req, res) {
     try {
-      const { petId, usuarioId, motivo, aceitouTermo, endereco } = req.body;
-
-      if (!petId || !usuarioId || !motivo) {
-        return res.status(400).json({ error: "Campos obrigatórios faltando" });
+      const { error, value } = adocaoValidation.validate(req.body, { abortEarly: false });
+      if (error) {
+        return res.status(400).json({ errors: error.details.map(e => e.message) });
       }
-
-      const dataAdocao = new Date();
-
       const adocao = await AdocaoService.createAdocao({
-        petId,
-        usuarioId,
-        motivo,
-        aceitouTermo: aceitouTermo ?? false,
-        dataAdocao,
-        endereco,
+        ...value,
+        dataAdocao: value.dataAdocao || new Date(),
       });
-
       return res.status(201).json(adocao);
     } catch (error) {
       console.error(error);
@@ -60,14 +53,14 @@ class AdocaoController {
   async updateAdocao(req, res) {
     try {
       const { id } = req.params;
-      const updateData = req.body;
-
-      const adocao = await AdocaoService.updateAdocao(Number(id), updateData);
-
+      const { error, value } = adocaoUpdateValidation.validate(req.body, { abortEarly: false });
+      if (error) {
+        return res.status(400).json({ errors: error.details.map(e => e.message) });
+      }
+      const adocao = await AdocaoService.updateAdocao(Number(id), value);
       if (!adocao) {
         return res.status(404).json({ error: "Adoção não encontrada" });
       }
-
       return res.status(200).json(adocao);
     } catch (error) {
       console.error(error);
