@@ -38,9 +38,10 @@ export const PetService = {
 
   async deletePet(id) {
     const pet = await PetRepository.findById(id);
-    if (pet && pet.foto) {
+    if (pet && pet.foto && pet.foto.startsWith("/uploads/")) {
       try {
-        fs.unlinkSync(pet.foto);
+        const filePath = pet.foto.substring(1);
+        fs.unlinkSync(filePath);
       } catch (err) {
         console.warn("Erro ao remover foto:", err.message);
       }
