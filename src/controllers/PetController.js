@@ -1,15 +1,22 @@
-
 import { PetService } from "../services/PetService.js";
-import { petValidation, petUpdateValidation } from "../validations/petValidation.js";
+import {
+  petValidation,
+  petUpdateValidation,
+} from "../validations/petValidation.js";
 
 export const PetController = {
   async createPet(req, res) {
     try {
-      const { error, value } = petValidation.validate(req.body, { abortEarly: false });
+      const { error, value } = petValidation.validate(req.body, {
+        abortEarly: false,
+      });
       if (error) {
-        return res.status(400).json({ errors: error.details.map(e => e.message) });
+        return res
+          .status(400)
+          .json({ errors: error.details.map((e) => e.message) });
       }
-      const fotoPath = req.file ? req.file.path : null;
+      // Salva apenas o caminho relativo para que funcione com express.static
+      const fotoPath = req.file ? `/uploads/${req.file.filename}` : null;
       const newPet = await PetService.createPet({
         ...value,
         foto: fotoPath,
@@ -50,11 +57,16 @@ export const PetController = {
   async updatePet(req, res) {
     try {
       const { id } = req.params;
-      const { error, value } = petUpdateValidation.validate(req.body, { abortEarly: false });
+      const { error, value } = petUpdateValidation.validate(req.body, {
+        abortEarly: false,
+      });
       if (error) {
-        return res.status(400).json({ errors: error.details.map(e => e.message) });
+        return res
+          .status(400)
+          .json({ errors: error.details.map((e) => e.message) });
       }
-      const fotoPath = req.file ? req.file.path : undefined;
+      // Salva apenas o caminho relativo para que funcione com express.static
+      const fotoPath = req.file ? `/uploads/${req.file.filename}` : undefined;
       const updateData = { ...value };
       if (fotoPath) updateData.foto = fotoPath;
       const updatedPet = await PetService.updatePet(id, updateData);
