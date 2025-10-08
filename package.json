@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "seed": "node prisma/seed.js",
-    "dev": "npm run migrate && npm run seed && npm start",
-    "migrate": "prisma migrate dev --name init",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build": "prisma generate",
+    "vercel-build": "prisma generate && prisma db push --accept-data-loss"
   },
   "repository": {
     "type": "git",
