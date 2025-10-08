@@ -28,12 +28,18 @@ export const PetController = {
     }
   },
 
-  async getAllPets(req, res) {
+  async getAllPets(_req, res) {
     try {
+      console.log("Tentando buscar pets...");
+      console.log("DATABASE_URL existe?", !!process.env.DATABASE_URL);
       const pets = await PetService.getAllPets();
+      console.log("Pets encontrados:", pets.length);
       return res.json(pets);
     } catch (error) {
       console.error(error);
+      console.error("Erro completo:", error);
+      console.error("Mensagem:", error.message);
+      console.error("Code:", error.code);
       return res.status(500).json({ message: "Erro ao buscar pets." });
     }
   },
