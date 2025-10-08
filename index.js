@@ -22,8 +22,18 @@ app.use(
 
 app.use(express.json());
 
-// Atenção: uploads de arquivos não funcionam bem na Vercel
-// Considere usar serviços como Cloudinary, AWS S3, ou Supabase Storage
+// Rota raiz para teste
+app.get("/", (req, res) => {
+  res.json({
+    message: "MiAuDota API está funcionando! 🐾",
+    endpoints: {
+      pets: "/api/pets",
+      usuarios: "/api/usuarios",
+      adocoes: "/api/adocoes",
+    },
+  });
+});
+
 app.use("/uploads", express.static("uploads"));
 app.use("/images", express.static("prisma/pet_images_seed"));
 
