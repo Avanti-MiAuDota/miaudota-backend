@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build": "prisma generate",
-    "vercel-build": "prisma generate && prisma db push --accept-data-loss"
+    "postinstall": "prisma generate"
   },
   "repository": {
     "type": "git",
