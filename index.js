@@ -30,7 +30,21 @@ app.get("/", (req, res) => {
       pets: "/api/pets",
       usuarios: "/api/usuarios",
       adocoes: "/api/adocoes",
+      debug: "/debug",
     },
+  });
+});
+
+// ROTA DE DEBUG - ADICIONE ANTES DO app.use("/api", routes)
+app.get("/debug", (req, res) => {
+  const dbUrl = process.env.DATABASE_URL || "";
+  res.json({
+    nodeEnv: process.env.NODE_ENV,
+    hasDatabaseUrl: !!process.env.DATABASE_URL,
+    databaseUrlLength: dbUrl.length,
+    databaseUrlStart: dbUrl.substring(0, 50) + "...",
+    hasJwtSecret: !!process.env.JWT_SECRET,
+    prismaVersion: "6.16.2",
   });
 });
 
