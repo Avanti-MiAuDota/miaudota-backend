@@ -29,7 +29,10 @@ export const PetService = {
         throw new Error("Falha no upload da imagem");
       }
 
-      fotoUrl = `${process.env.SUPABASE_IMAGE_URL}/${fileName}`;
+      const bucketName = "pet-images";
+      const pathInBucket = `public/${fileName}`;
+
+      fotoUrl = `${process.env.SUPABASE_IMAGE_URL}/${bucketName}/${pathInBucket}`;
     }
 
     const petData = {
@@ -59,12 +62,19 @@ export const PetService = {
 
   async deletePet(id) {
     const pet = await PetRepository.findById(id);
-    if (pet && pet.foto && pet.foto.includes(process.env.SUPABASE_IMAGE_URL)) {
+    if (pet && pet.foto && pet.foto.includes("/pet-images/")) {
       try {
-        const fileName = pet.foto.split("/").pop();
-        await supabase.storage.from("pet-images").remove([fileName]);
+        const pathSegments = pet.foto.split("/pet-images/");
+        const pathInBucket = pathSegments[pathSegments.length - 1];
+        const { error } = await supabase.storage
+          .from("pet-images")
+          .remove([pathInBucket]);
+
+        if (error) {
+          console.warn("Erro ao remover foto do Storage:", error.message);
+        }
       } catch (err) {
-        console.warn("Erro ao remover foto:", err.message);
+        console.error("Erro ao processar remoção do arquivo:", err);
       }
     }
     return PetRepository.delete(id);
