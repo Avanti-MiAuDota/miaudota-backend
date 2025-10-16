@@ -11,4 +11,3 @@ router.put("/:id", authMiddleware, UsuarioController.update);
 router.delete("/:id", authMiddleware, UsuarioController.delete);
 
 export default router;
-

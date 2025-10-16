@@ -1,5 +1,5 @@
 import { PetRepository } from "../repositories/PetRepository.js";
-import fs from "fs";
+import supabase from "../utils/supabaseClient.js";
 
 export const PetService = {
   async createPet({
@@ -9,8 +9,29 @@ export const PetService = {
     dataNascimento,
     descricao,
     status,
-    foto,
+    fotoFile,
   }) {
+    let fotoUrl = null;
+
+    if (fotoFile) {
+      const { originalname, mimetype, buffer } = fotoFile;
+      const fileName = `${Date.now()}-${originalname}`;
+
+      const { error } = await supabase.storage
+        .from("pet-images")
+        .upload(`public/${fileName}`, buffer, {
+          contentType: mimetype,
+          upsert: false,
+        });
+
+      if (error) {
+        console.error("Erro ao enviar imagem:", error.message);
+        throw new Error("Falha no upload da imagem");
+      }
+
+      fotoUrl = `${process.env.SUPABASE_IMAGE_URL}/${fileName}`;
+    }
+
     const petData = {
       nome,
       especie,
@@ -18,7 +39,7 @@ export const PetService = {
       dataNascimento,
       descricao,
       status: status || "DISPONIVEL",
-      foto,
+      foto: fotoUrl,
     };
 
     return PetRepository.createPet(petData);
@@ -38,10 +59,10 @@ export const PetService = {
 
   async deletePet(id) {
     const pet = await PetRepository.findById(id);
-    if (pet && pet.foto && pet.foto.startsWith("/uploads/")) {
+    if (pet && pet.foto && pet.foto.includes(process.env.SUPABASE_IMAGE_URL)) {
       try {
-        const filePath = pet.foto.substring(1);
-        fs.unlinkSync(filePath);
+        const fileName = pet.foto.split("/").pop();
+        await supabase.storage.from("pet-images").remove([fileName]);
       } catch (err) {
         console.warn("Erro ao remover foto:", err.message);
       }

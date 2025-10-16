@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Avanti-MiAuDota/miaudota-backend#readme",
   "dependencies": {
     "@prisma/client": "^6.16.2",
+    "@supabase/supabase-js": "^2.75.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",

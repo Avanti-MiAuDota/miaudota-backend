@@ -15,11 +15,13 @@ export const PetController = {
           .status(400)
           .json({ errors: error.details.map((e) => e.message) });
       }
-      // Salva apenas o caminho relativo para que funcione com express.static
-      const fotoPath = req.file ? `/uploads/${req.file.filename}` : null;
+      const fotoPath = req.file
+        ? `${process.env.SUPABASE_IMAGE_URL}/${req.file.filename}`
+        : null;
+
       const newPet = await PetService.createPet({
         ...value,
-        foto: fotoPath,
+        fotoFile: req.file,
       });
       return res.status(201).json(newPet);
     } catch (error) {
