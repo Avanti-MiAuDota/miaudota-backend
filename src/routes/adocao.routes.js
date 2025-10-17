@@ -24,6 +24,6 @@ router.put("/:id", authMiddleware, AdocaoController.updateAdocao);
 
 // DELETE /adocoes/:id -> Remove adoção
 // Chama o método deleteAdocao do Controller
-router.delete("/:id", authMiddleware, AdocaoController.deleteAdocao);
+router.delete("/:id", authMiddleware, roleMiddleware("ADMIN"), AdocaoController.deleteAdocao);
 
 export default router;
