@@ -14,10 +14,26 @@ export const PetRepository = {
   },
 
   async findById(id) {
-    return prisma.pet.findUnique({
-      where: { id: parseInt(id) },
-      include: { adocoes: true },
-    });
+    try {
+      console.log("PetRepository.findById chamado com ID:", id, typeof id);
+      const petId = typeof id === 'string' ? parseInt(id) : id;
+      console.log("ID convertido para:", petId);
+      
+      const result = await prisma.pet.findUnique({
+        where: { id: petId },
+        include: { adocoes: true },
+      });
+      
+      console.log("Resultado da query:", !!result);
+      return result;
+    } catch (error) {
+      console.error("Erro no PetRepository.findById:", {
+        message: error.message,
+        code: error.code,
+        meta: error.meta
+      });
+      throw error;
+    }
   },
 
   async update(id, data) {

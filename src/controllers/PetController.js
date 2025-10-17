@@ -49,16 +49,37 @@ export const PetController = {
   async getPetById(req, res) {
     try {
       const { id } = req.params;
-      const pet = await PetService.getPetById(id);
+      console.log("Buscando pet com ID:", id);
+      
+      // Validar se o ID é um número válido
+      const petId = parseInt(id);
+      if (isNaN(petId)) {
+        console.log("ID inválido:", id);
+        return res.status(400).json({ message: "ID do pet inválido." });
+      }
+      
+      console.log("ID parseado:", petId);
+      const pet = await PetService.getPetById(petId);
+      console.log("Pet encontrado:", !!pet);
 
       if (!pet) {
+        console.log("Pet não encontrado com ID:", petId);
         return res.status(404).json({ message: "Pet não encontrado." });
       }
 
+      console.log("Retornando pet:", pet.nome);
       return res.json(pet);
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: "Erro ao buscar pet." });
+      console.error("Erro detalhado ao buscar pet:", {
+        message: error.message,
+        stack: error.stack,
+        name: error.name,
+        code: error.code
+      });
+      return res.status(500).json({ 
+        message: "Erro ao buscar pet.",
+        error: process.env.NODE_ENV === "development" ? error.message : undefined
+      });
     }
   },
 

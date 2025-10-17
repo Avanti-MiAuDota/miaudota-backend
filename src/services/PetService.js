@@ -53,7 +53,15 @@ export const PetService = {
   },
 
   async getPetById(id) {
-    return PetRepository.findById(id);
+    try {
+      console.log("PetService.getPetById chamado com ID:", id, typeof id);
+      const result = await PetRepository.findById(id);
+      console.log("Resultado do repository:", !!result);
+      return result;
+    } catch (error) {
+      console.error("Erro no PetService.getPetById:", error);
+      throw error;
+    }
   },
 
   async updatePet(id, data) {
