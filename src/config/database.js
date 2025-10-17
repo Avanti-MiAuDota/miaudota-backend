@@ -1,23 +1,26 @@
 import { PrismaClient } from "@prisma/client";
 
-const globalForPrisma = globalThis;
+// Configuração específica para ambiente serverless
+let prisma;
 
-const prismaClientSingleton = () => {
-  return new PrismaClient({
-    log: ["error", "warn"],
-    errorFormat: "pretty",
-    datasources: {
-      db: {
-        url: process.env.DATABASE_URL,
-      },
-    },
+if (process.env.NODE_ENV === "production") {
+  // Em produção (Vercel), cria nova instância sempre para evitar prepared statement conflicts
+  prisma = new PrismaClient({
+    log: ["error"],
+    errorFormat: "minimal",
   });
-};
+} else {
+  // Em desenvolvimento, usa singleton global
+  const globalForPrisma = globalThis;
 
-export const prisma = globalForPrisma.prisma || prismaClientSingleton();
+  if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = new PrismaClient({
+      log: ["error", "warn"],
+      errorFormat: "pretty",
+    });
+  }
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+  prisma = globalForPrisma.prisma;
 }
 
 export default prisma;
