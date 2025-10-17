@@ -1,12 +1,6 @@
 import express from "express";
 import cors from "cors";
 import routes from "./src/routes/index.js";
-// import { ensureUploadsDir } from "./src/utils/fileUtils.js";
-
-// Garantir que o diretório existe apenas em desenvolvimento
-// if (process.env.NODE_ENV !== "production") {
-//   ensureUploadsDir();
-// }
 
 const app = express();
 
@@ -47,9 +41,6 @@ app.get("/debug", (req, res) => {
     prismaVersion: "6.16.2",
   });
 });
-
-// app.use("/uploads", express.static("uploads"));
-// app.use("/images", express.static("prisma/pet_images_seed"));
 
 app.use("/api", routes);
 
