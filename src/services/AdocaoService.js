@@ -107,11 +107,9 @@ class AdocaoService {
     // Se a adoção foi rejeitada, verificar se o pet deve voltar para DISPONIVEL
     if (status === "REJEITADA") {
       const adocoesPendentes = await AdocaoRepository.findByPetId(adocao.petId);
-      const nenhumaAdoacaoPendente = adocoesPendentes.every(
-        (a) => a.status !== "PENDENTE"
-      );
 
-      if (nenhumaAdoacaoPendente) {
+      // Se não houver mais adoções relacionadas ao pet, torná-lo DISPONIVEL
+      if (adocoesPendentes.length === 0) {
         await PetRepository.updateStatus(adocao.petId, "DISPONIVEL");
       }
     }
