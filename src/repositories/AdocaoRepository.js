@@ -112,6 +112,32 @@ class AdocaoRepository {
       throw error;
     }
   }
-}
 
+  async findByUsuarioId(usuarioId) {
+    return await prisma.adocao.findMany({
+      where: { usuarioId: Number(usuarioId) },
+      include: {
+        pet: true,
+        usuario: true,
+        endereco: true,
+      },
+      orderBy: {
+        dataAdocao: "desc",
+      },
+    });
+  }
+
+    async findByPetId(petId) {
+    return await prisma.adocao.findMany({
+      where: { petId: Number(petId) },
+      include: {
+        usuario: true,
+        endereco: true,
+      },
+      orderBy: {
+        dataAdocao: "desc",
+      },
+    });
+  }
+}
 export default new AdocaoRepository();
