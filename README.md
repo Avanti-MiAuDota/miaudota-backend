@@ -163,7 +163,7 @@ miaudota-backend/
 
 ## Modelagem do Banco de Dados
 
-<img width="987" height="634" alt="Captura de tela 2025-10-01 091011" src="https://github.com/user-attachments/assets/12c63dfd-7726-4724-813a-537efe022ce7" />
+<img width="1095" height="408" alt="diagrama" src="https://github.com/user-attachments/assets/040fc5d7-d6ad-469b-a21c-003a13b43ad3" />
 
 ## Equipe de Desenvolvimento
 
