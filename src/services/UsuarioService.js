@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { UsuarioRepository } from "../repositories/UsuarioRepository.js";
 import bcrypt from "bcrypt";
+import AdocaoRepository from "../repositories/AdocaoRepository.js";
 
 export const UsuarioService = {
   async getAllUsuarios() {
@@ -50,6 +51,23 @@ export const UsuarioService = {
   },
 
   async deleteUsuario(id) {
-    return await UsuarioRepository.delete(id);
+    try {
+      const adocoes = await AdocaoRepository.findByUsuarioId(id);
+
+      if (adocoes && adocoes.length > 0) {
+        for (const adocao of adocoes) {
+          console.info(`Deletando adoção ID: ${adocao.id}`);
+          await AdocaoService.deleteAdocao(adocao.id);
+        }
+      }
+
+      const deletedUser = await UsuarioRepository.delete(id);
+      console.info(`Usuário ${id} deletado com sucesso.`);
+      return deletedUser;
+    } catch (error) {
+      console.error("Erro ao deletar usuário:", error.message);
+      console.error(error.stack);
+      throw new Error(`Falha ao deletar usuário ${id}: ${error.message}`);
+    }
   },
 };

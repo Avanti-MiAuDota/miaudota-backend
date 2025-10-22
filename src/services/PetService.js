@@ -1,3 +1,4 @@
+import AdocaoRepository from "../repositories/AdocaoRepository.js";
 import { PetRepository } from "../repositories/PetRepository.js";
 import supabase from "../utils/supabaseClient.js";
 
@@ -62,6 +63,14 @@ export const PetService = {
 
   async deletePet(id) {
     const pet = await PetRepository.findById(id);
+    const adocoes = await AdocaoRepository.findByPetId(id);
+    if (adocoes && adocoes.length > 0) {
+      for (const adocao of adocoes) {
+        console.info(`Deletando adoção ID: ${adocao.id}`);
+        await AdocaoService.deleteAdocao(adocao.id);
+      }
+    }
+    
     if (pet && pet.foto && pet.foto.includes("/pet-images/")) {
       try {
         const pathSegments = pet.foto.split("/pet-images/");
