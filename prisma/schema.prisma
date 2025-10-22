@@ -56,6 +56,7 @@ model Adocao {
   criadoEm     DateTime @default(now()) @map("criado_em")
   endereco     Endereco   @relation(fields: [enderecoId], references: [id])
   enderecoId   Int       @unique
+  status StatusAdocao @default(PENDENTE)
 }
 
 enum TipoUsuario { 
@@ -77,4 +78,10 @@ enum StatusPet {
   DISPONIVEL
   EM_ANALISE
   ADOTADO
+}
+
+enum StatusAdocao {
+  PENDENTE
+  APROVADA
+  REJEITADA
 }

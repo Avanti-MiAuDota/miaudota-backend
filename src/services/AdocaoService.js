@@ -78,6 +78,29 @@ class AdocaoService {
     return adocaoAtualizada;
   }
 
+  async updateAdocaoStatus(id, status) {
+    const adocao = await AdocaoRepository.findById(id);
+
+    if (!adocao) {
+      throw new Error("Adoção não encontrada");
+    }
+
+    // Atualiza o status da adoção
+    const adocaoAtualizada = await AdocaoRepository.update(id, { status });
+
+    // Se a adoção foi rejeitada, verificar se o pet deve voltar para DISPONIVEL
+    if (status === "REJEITADA") {
+      const adocoesPendentes = await AdocaoRepository.findByPetId(adocao.petId);
+
+      // Se não houver mais adoções relacionadas ao pet, torná-lo DISPONIVEL
+      if (adocoesPendentes.length === 0) {
+        await PetRepository.updateStatus(adocao.petId, "DISPONIVEL");
+      }
+    }
+
+    return adocaoAtualizada;
+  }
+
   async deleteAdocao(id) {
     // Regra de Negócio: Ao deletar uma adoção em análise, o Pet deve voltar para DISPONIVEL.
     const adocao = await AdocaoRepository.findById(id);
