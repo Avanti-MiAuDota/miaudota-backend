@@ -1,14 +1,38 @@
 import { Prisma } from "@prisma/client";
 import { UsuarioRepository } from "../repositories/UsuarioRepository.js";
 import bcrypt from "bcrypt";
+import AdocaoRepository from "../repositories/AdocaoRepository.js";
+import AdocaoService from "./AdocaoService.js";
 
 export const UsuarioService = {
   async getAllUsuarios() {
-    return await UsuarioRepository.findAll();
+    const usuarios = await UsuarioRepository.findAll();
+
+    const usuariosComAdocoes = await Promise.all(
+      usuarios.map(async (usuario) => {
+        const adocoes = await AdocaoRepository.findByUsuarioId(usuario.id);
+        return {
+          ...usuario,
+          totalAdocoes: adocoes.length,
+          temAdocoes: adocoes.length > 0,
+        };
+      })
+    );
+
+    return usuariosComAdocoes;
   },
 
   async getUsuarioById(id) {
-    return await UsuarioRepository.findById(id);
+    const usuario = await UsuarioRepository.findById(id);
+
+    if (!usuario) return null;
+
+    const adocoes = await AdocaoRepository.findByUsuarioId(usuario.id);
+    return {
+      ...usuario,
+      totalAdocoes: adocoes.length,
+      temAdocoes: adocoes.length > 0,
+    };
   },
 
   async createUsuario(usuarioModel) {
@@ -49,7 +73,26 @@ export const UsuarioService = {
     return await UsuarioRepository.update(id, updateData);
   },
 
+  //Ajustei o delete de usuario para permitir a exclusão, que sera feita
+  //apenas pelo admin pois irei retirar o botão de exclusão do perfil do suaurio
   async deleteUsuario(id) {
-    return await UsuarioRepository.delete(id);
+    try {
+      const adocoes = await AdocaoRepository.findByUsuarioId(id);
+
+      if (adocoes && adocoes.length > 0) {
+        for (const adocao of adocoes) {
+          console.info(`Deletando adoção ID: ${adocao.id}`);
+          await AdocaoService.deleteAdocao(adocao.id);
+        }
+      }
+
+      const deletedUser = await UsuarioRepository.delete(id);
+      console.info(`Usuário ${id} deletado com sucesso.`);
+      return deletedUser;
+    } catch (error) {
+      console.error("Erro ao deletar usuário:", error.message);
+      console.error(error.stack);
+      throw new Error(`Falha ao deletar usuário ${id}: ${error.message}`);
+    }
   },
 };
