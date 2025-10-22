@@ -139,5 +139,15 @@ class AdocaoRepository {
       },
     });
   }
+
+  // Busca adoção por usuário e pet
+  async findByUserAndPet(usuarioId, petId) {
+    return await prisma.adocao.findFirst({
+      where: {
+        usuarioId: Number(usuarioId),
+        petId: Number(petId),
+      },
+    });
+  }
 }
 export default new AdocaoRepository();
