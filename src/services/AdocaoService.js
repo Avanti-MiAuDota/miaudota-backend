@@ -92,6 +92,32 @@ class AdocaoService {
 
     return deleted; // Retorna true ou false (que o Controller usa para 404)
   }
+
+  // Atualiza o status da adoção e, se necessário, o status do pet
+  async updateAdocaoStatus(id, status) {
+    const adocao = await AdocaoRepository.findById(id);
+
+    if (!adocao) {
+      throw new Error("Adoção não encontrada");
+    }
+
+    // Atualiza o status da adoção
+    const adocaoAtualizada = await AdocaoRepository.update(id, { status });
+
+    // Se a adoção foi rejeitada, verificar se o pet deve voltar para DISPONIVEL
+    if (status === "REJEITADA") {
+      const adocoesPendentes = await AdocaoRepository.findByPetId(adocao.petId);
+      const nenhumaAdoacaoPendente = adocoesPendentes.every(
+        (a) => a.status !== "PENDENTE"
+      );
+
+      if (nenhumaAdoacaoPendente) {
+        await PetRepository.updateStatus(adocao.petId, "DISPONIVEL");
+      }
+    }
+
+    return adocaoAtualizada;
+  }
 }
 
 export default new AdocaoService();
