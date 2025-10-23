@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import { UsuarioRepository } from "../repositories/UsuarioRepository.js";
 import bcrypt from "bcrypt";
 import AdocaoRepository from "../repositories/AdocaoRepository.js";
+import AdocaoService from "./AdocaoService.js";
 
 export const UsuarioService = {
   async getAllUsuarios() {
