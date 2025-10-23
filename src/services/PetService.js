@@ -1,6 +1,7 @@
 import AdocaoRepository from "../repositories/AdocaoRepository.js";
 import { PetRepository } from "../repositories/PetRepository.js";
 import supabase from "../utils/supabaseClient.js";
+import AdocaoService from "./AdocaoService.js";
 
 export const PetService = {
   async createPet({
