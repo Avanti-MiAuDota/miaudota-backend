@@ -78,19 +78,26 @@ class AdocaoService {
   }
 
   async deleteAdocao(id) {
-    // Regra de Negócio: Ao deletar uma adoção em análise, o Pet deve voltar para DISPONIVEL.
     const adocao = await AdocaoRepository.findById(id);
 
-    if (adocao) {
-      // Se o Pet estava em análise devido a esta adoção, ele volta a ser DISPONIVEL
-      if (adocao.pet.status === "EM_ANALISE") {
-        await PetRepository.updateStatus(adocao.petId, "DISPONIVEL");
-      }
+    if (!adocao) {
+      throw new Error("Adoção não encontrada");
+    }
+    if (adocao.pet && adocao.pet.status === "EM_ANALISE") {
+      console.info(
+        `Atualizando status do Pet ID: ${adocao.petId} para DISPONIVEL`
+      );
+      await PetRepository.updateStatus(adocao.petId, "DISPONIVEL");
     }
 
+    console.info(`Excluindo adoção ID: ${id}`);
     const deleted = await AdocaoRepository.delete(id);
+    if (adocao.endereco) {
+      console.info(`Excluindo endereço ID: ${adocao.endereco.id}`);
+      await AdocaoRepository.deleteEndereco(adocao.endereco.id);
+    }
 
-    return deleted; // Retorna true ou false (que o Controller usa para 404)
+    return deleted;
   }
 
   // Atualiza o status da adoção e, se necessário, o status do pet

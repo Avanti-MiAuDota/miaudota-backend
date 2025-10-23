@@ -140,6 +140,19 @@ class AdocaoRepository {
     });
   }
 
+  // Remove registro de endereço por ID
+   async deleteEndereco(enderecoId) {
+    try {
+      await prisma.endereco.delete({
+        where: { id: Number(enderecoId) },
+      });
+      return true;
+    } catch (error) {
+      if (error.code === "P2025") return false;
+      throw error;
+    }
+  }
+
   // Busca adoção por usuário e pet
   async findByUserAndPet(usuarioId, petId) {
     return await prisma.adocao.findFirst({
