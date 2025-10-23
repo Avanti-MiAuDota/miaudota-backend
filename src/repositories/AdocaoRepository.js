@@ -113,6 +113,18 @@ class AdocaoRepository {
     }
   }
 
+  async deleteEndereco(enderecoId) {
+    try {
+      await prisma.endereco.delete({
+        where: { id: Number(enderecoId) },
+      });
+      return true;
+    } catch (error) {
+      if (error.code === "P2025") return false;
+      throw error;
+    }
+  }
+
   async findByUsuarioId(usuarioId) {
     return await prisma.adocao.findMany({
       where: { usuarioId: Number(usuarioId) },
