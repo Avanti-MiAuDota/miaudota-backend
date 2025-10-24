@@ -127,7 +127,7 @@ class AdocaoRepository {
     });
   }
 
-    async findByPetId(petId) {
+  async findByPetId(petId) {
     return await prisma.adocao.findMany({
       where: { petId: Number(petId) },
       include: {
@@ -141,7 +141,7 @@ class AdocaoRepository {
   }
 
   // Remove registro de endereço por ID
-   async deleteEndereco(enderecoId) {
+  async deleteEndereco(enderecoId) {
     try {
       await prisma.endereco.delete({
         where: { id: Number(enderecoId) },
@@ -162,5 +162,24 @@ class AdocaoRepository {
       },
     });
   }
+
+  async updateStatus(id, status) {
+    try {
+      console.info(`Atualizando status da adoção ID: ${id} para ${status}`);
+      const updatedAdocao = await prisma.adocao.update({
+        where: { id: Number(id) },
+        data: { status },
+      });
+      console.info(`Status atualizado com sucesso: ${updatedAdocao.status}`);
+      return updatedAdocao;
+    } catch (error) {
+      if (error.code === "P2025") {
+        console.error("Adoção não encontrada para atualização de status.");
+        return null;
+      }
+      throw error;
+    }
+  }
 }
+
 export default new AdocaoRepository();

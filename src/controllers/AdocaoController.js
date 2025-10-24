@@ -88,7 +88,7 @@ class AdocaoController {
         return res.status(400).json({ error: "Status inválido." });
       }
 
-      const adocaoAtualizada = await AdocaoService.updateAdocaoStatus(
+      const adocaoAtualizada = await AdocaoService.updateStatus(
         Number(id),
         status
       );

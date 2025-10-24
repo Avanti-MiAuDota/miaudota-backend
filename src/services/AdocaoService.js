@@ -2,6 +2,8 @@
 import AdocaoRepository from "../repositories/AdocaoRepository.js";
 import { PetRepository } from "../repositories/PetRepository.js";
 import { UsuarioRepository } from "../repositories/UsuarioRepository.js";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 class AdocaoService {
   // Método principal: Lida com a criação de uma nova adoção e todas as regras de negócio.
@@ -101,27 +103,22 @@ class AdocaoService {
   }
 
   // Atualiza o status da adoção e, se necessário, o status do pet
-  async updateAdocaoStatus(id, status) {
-    const adocao = await AdocaoRepository.findById(id);
-
-    if (!adocao) {
-      throw new Error("Adoção não encontrada");
-    }
-
-    // Atualiza o status da adoção
-    const adocaoAtualizada = await AdocaoRepository.update(id, { status });
-
-    // Se a adoção foi rejeitada, verificar se o pet deve voltar para DISPONIVEL
-    if (status === "REJEITADA") {
-      const adocoesPendentes = await AdocaoRepository.findByPetId(adocao.petId);
-
-      // Se não houver mais adoções relacionadas ao pet, torná-lo DISPONIVEL
-      if (adocoesPendentes.length === 0) {
-        await PetRepository.updateStatus(adocao.petId, "DISPONIVEL");
+  async updateStatus(id, status) {
+    try {
+      console.info(`Atualizando status da adoção ID: ${id} para ${status}`);
+      const updatedAdocao = await prisma.adocao.update({
+        where: { id: Number(id) },
+        data: { status },
+      });
+      console.info(`Status atualizado com sucesso: ${updatedAdocao.status}`);
+      return updatedAdocao;
+    } catch (error) {
+      if (error.code === "P2025") {
+        console.error("Adoção não encontrada para atualização de status.");
+        return null;
       }
+      throw error;
     }
-
-    return adocaoAtualizada;
   }
 }
 
