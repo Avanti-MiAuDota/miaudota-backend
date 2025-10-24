@@ -1,5 +1,5 @@
 import { Router } from "express";
-import AdocaoController from "../controllers/AdocaoController.js";
+import AdocaoController from "../controllers/AdocaoController.js"; 
 import authMiddleware from "../middlewares/authMiddleware.js";
 import roleMiddleware from "../middlewares/roleMiddleware.js";
 
@@ -11,17 +11,15 @@ router.post(
   roleMiddleware("USUARIO"),
   AdocaoController.createAdocao
 );
-
 router.get("/", AdocaoController.getAdocoes);
+router.get("/por-pet", AdocaoController.getAdoptionsByPetId);
 router.get("/:id", AdocaoController.getAdocaoById);
-router.get("/adocoes", AdocaoController.getAdoptionsByPetId);
 router.put("/:id", authMiddleware, AdocaoController.updateAdocao);
-router.delete("/:id", authMiddleware, AdocaoController.deleteAdocao);
 router.patch(
   "/:id/status",
   authMiddleware,
-  roleMiddleware("ADMIN"),
   AdocaoController.updateAdocaoStatus
 );
+router.delete("/:id", authMiddleware, AdocaoController.deleteAdocao);
 
 export default router;
