@@ -109,7 +109,20 @@ class AdocaoService {
       const updatedAdocao = await prisma.adocao.update({
         where: { id: Number(id) },
         data: { status },
+        include: { pet: true }, // Inclui o pet relacionado
       });
+
+      // Se o status da adoção for "APROVADA", atualize o status do pet para "ADOTADO"
+      if (status === "APROVADA" && updatedAdocao.pet) {
+        console.info(
+          `Atualizando status do Pet ID: ${updatedAdocao.pet.id} para ADOTADO`
+        );
+        await prisma.pet.update({
+          where: { id: updatedAdocao.pet.id },
+          data: { status: "ADOTADO" },
+        });
+      }
+
       console.info(`Status atualizado com sucesso: ${updatedAdocao.status}`);
       return updatedAdocao;
     } catch (error) {
