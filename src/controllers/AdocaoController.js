@@ -88,7 +88,7 @@ class AdocaoController {
         return res.status(400).json({ error: "Status inválido." });
       }
 
-      const adocaoAtualizada = await AdocaoService.updateAdocaoStatus(
+      const adocaoAtualizada = await AdocaoService.updateStatus(
         Number(id),
         status
       );
@@ -118,6 +118,24 @@ class AdocaoController {
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: error.message });
+    }
+  }
+
+  // GET /adocoes/pets/:petId
+  async getAdoptionsByPetId(req, res) {
+    try {
+      const { petId } = req.query;
+
+      if (!petId) {
+        return res.status(400).json({ error: "petId é obrigatório na query." });
+      }
+
+      const adoptions = await AdocaoService.getAdoptionsByPetId(Number(petId));
+
+      return res.status(200).json(adoptions);
+    } catch (error) {
+      console.error("Erro ao buscar adoções por pet:", error);
+      return res.status(500).json({ error: "Erro ao buscar adoções por pet." });
     }
   }
 }
