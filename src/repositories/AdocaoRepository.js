@@ -140,16 +140,23 @@ class AdocaoRepository {
   }
 
   async findByPetId(petId) {
-    return await prisma.adocao.findMany({
-      where: { petId: Number(petId) },
-      include: {
-        usuario: true,
-        endereco: true,
-      },
-      orderBy: {
-        dataAdocao: "desc",
-      },
-    });
+    console.log("Buscando adoções para petId:", petId); // Log para depuração
+    try {
+      return await prisma.adocao.findMany({
+        where: { petId: Number(petId) },
+        include: {
+          pet: true,
+          usuario: true,
+          endereco: true,
+        },
+        orderBy: {
+          dataAdocao: "desc",
+        },
+      });
+    } catch (error) {
+      console.error("Erro ao buscar adoções por pet no repositório:", error);
+      throw error;
+    }
   }
 
   // Busca adoção por usuário e pet
@@ -162,7 +169,7 @@ class AdocaoRepository {
     });
   }
 
-    async updateStatus(id, status) {
+  async updateStatus(id, status) {
     try {
       console.info(`Atualizando status da adoção ID: ${id} para ${status}`);
       const updatedAdocao = await prisma.adocao.update({
@@ -179,6 +186,6 @@ class AdocaoRepository {
       throw error;
     }
   }
-}       
+}
 
 export default new AdocaoRepository();
