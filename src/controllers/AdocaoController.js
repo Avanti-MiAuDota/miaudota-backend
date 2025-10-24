@@ -120,6 +120,19 @@ class AdocaoController {
       return res.status(500).json({ error: error.message });
     }
   }
+
+  // GET /adocoes/pets/:petId
+  async getAdoptionsByPetId(req, res) {
+    const { petId } = req.query;
+
+    try {
+      const adoptions = await AdocaoService.getAdoptionsByPetId(petId);
+      res.status(200).json(adoptions);
+    } catch (error) {
+      console.error("Erro ao buscar adoções por pet:", error);
+      res.status(500).json({ error: "Erro ao buscar adoções por pet." });
+    }
+  }
 }
 
 export default new AdocaoController();

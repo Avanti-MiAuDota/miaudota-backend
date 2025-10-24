@@ -128,16 +128,15 @@ class AdocaoRepository {
   }
 
   async findByPetId(petId) {
-    return await prisma.adocao.findMany({
-      where: { petId: Number(petId) },
-      include: {
-        usuario: true,
-        endereco: true,
-      },
-      orderBy: {
-        dataAdocao: "desc",
-      },
-    });
+    try {
+      return await prisma.adocao.findMany({
+        where: { petId: Number(petId) },
+        include: { pet: true, usuario: true },
+      });
+    } catch (error) {
+      console.error("Erro ao buscar adoções por pet no repositório:", error);
+      throw error;
+    }
   }
 
   // Remove registro de endereço por ID

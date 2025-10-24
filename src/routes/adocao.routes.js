@@ -14,6 +14,7 @@ router.post(
 
 router.get("/", AdocaoController.getAdocoes);
 router.get("/:id", AdocaoController.getAdocaoById);
+router.get("/adocoes", AdocaoController.getAdoptionsByPetId);
 router.put("/:id", authMiddleware, AdocaoController.updateAdocao);
 router.delete("/:id", authMiddleware, AdocaoController.deleteAdocao);
 router.patch(

@@ -133,6 +133,15 @@ class AdocaoService {
       throw error;
     }
   }
+
+  async getAdoptionsByPetId(petId) {
+    try {
+      return await AdocaoRepository.findByPetId(petId);
+    } catch (error) {
+      console.error("Erro ao buscar adoções por pet no serviço:", error);
+      throw error;
+    }
+  }
 }
 
 export default new AdocaoService();
